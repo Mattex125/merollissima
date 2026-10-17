@@ -26,4 +26,25 @@ const gazette = defineCollection({
       }),
 });
 
-export const collections = { gazette };
+const history = defineCollection({
+  // One file per chapter: src/content/history/<slug>.md. The file name is the
+  // chapter's anchor on the History page (/history/#<slug>).
+  loader: glob({ base: "./src/content/history", pattern: "*.md" }),
+  schema: ({ image }) =>
+    z
+      .object({
+        title: z.string().trim().min(1),
+        /** Position of the chapter on the History page. */
+        order: z.number().int().positive(),
+        /** Optional photo shown at the end of the chapter. */
+        photo: image().optional(),
+        photoAlt: z.string().trim().min(1).optional(),
+        photoCaption: z.string().trim().min(1).optional(),
+      })
+      .refine((data) => !data.photo || data.photoAlt, {
+        error: "photoAlt is required when photo is set",
+        path: ["photoAlt"],
+      }),
+});
+
+export const collections = { gazette, history };
