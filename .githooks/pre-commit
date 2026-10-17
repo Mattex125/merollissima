@@ -1,0 +1,4 @@
+#!/bin/sh
+# Block commits that add Minecraft world or server data.
+# Enable once per clone: git config core.hooksPath .githooks
+git diff --cached --name-only -z --diff-filter=ACMR | tr '\0' '\n' | sh scripts/guard-world-data.sh

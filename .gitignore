@@ -45,6 +45,16 @@ uid.dat
 *.mcr
 *.mcc
 *.mcworld
+# world backups and downloads are usually archives
+*.zip
+*.7z
+*.rar
+*.tar
+*.tgz
+*.gz
+*.bz2
+*.xz
+*.zst
 playerdata/
 DIM-1/
 DIM1/
