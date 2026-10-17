@@ -1,0 +1,13 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import ButtonLink from "../components/ButtonLink.astro";
+import Container from "../components/Container.astro";
+import PageHeader from "../components/PageHeader.astro";
+---
+
+<BaseLayout title="Page not found" description="This page does not exist or has moved." noindex>
+  <Container>
+    <PageHeader title="Page not found" lead="This page does not exist or has moved." />
+    <ButtonLink href="/">Back to home</ButtonLink>
+  </Container>
+</BaseLayout>

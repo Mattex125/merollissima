@@ -9,9 +9,11 @@ interface Props {
   /** Page title. Omit it on the home page to show only the site name. */
   title?: string;
   description?: string;
+  /** Keep the page out of search engines (e.g. the 404 page). */
+  noindex?: boolean;
 }
 
-const { title, description = SITE.description } = Astro.props;
+const { title, description = SITE.description, noindex = false } = Astro.props;
 const pageTitle = title ? `${title} · ${SITE.name}` : SITE.name;
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 ---
@@ -25,7 +27,11 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     <meta name="color-scheme" content="dark" />
     <title>{pageTitle}</title>
     <meta name="description" content={description} />
-    <link rel="canonical" href={canonicalURL.href} />
+    {noindex ? (
+      <meta name="robots" content="noindex" />
+    ) : (
+      <link rel="canonical" href={canonicalURL.href} />
+    )}
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <meta property="og:type" content="website" />
     <meta property="og:locale" content={SITE.ogLocale} />
