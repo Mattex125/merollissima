@@ -1,0 +1,62 @@
+# build output / generated
+dist/
+.astro/
+.vercel/
+
+# dependencies
+node_modules/
+
+# logs
+*.log
+npm-debug.log*
+
+# environment
+.env
+.env.*
+!.env.example
+
+# local tool / agent overrides
+mise.local.toml
+.claude/settings.local.json
+CLAUDE.local.md
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.directory
+*~
+.idea/
+.vscode/*
+!.vscode/extensions.json
+*.blend1
+
+# ===== PRIVATE: Minecraft world & server data, never commit =====
+# level.dat contains the world seed; region files contain the world itself.
+# Keep world copies outside the repo or in the ignored world/ folder.
+/world*/
+/saves/
+/backups/
+level.dat
+level.dat_old
+level.dat_new
+session.lock
+uid.dat
+*.mca
+*.mcr
+*.mcc
+*.mcworld
+playerdata/
+DIM-1/
+DIM1/
+# UUID-named player files (playerdata, stats, advancements, players/)
+????????-????-????-????-????????????.dat
+????????-????-????-????-????????????.dat_old
+????????-????-????-????-????????????.json
+# server files with player names, UUIDs, IPs or secrets
+usercache.json
+usernamecache.json
+ops.json
+whitelist.json
+banned-players.json
+banned-ips.json
+server.properties
