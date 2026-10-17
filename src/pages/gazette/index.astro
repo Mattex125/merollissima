@@ -3,13 +3,14 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 import Container from "../../components/Container.astro";
 import LorePlaceholder from "../../components/LorePlaceholder.astro";
 import PageHeader from "../../components/PageHeader.astro";
+import { SECTIONS } from "../../config/site";
 
-const lead = "Announcements, public works and official communications, newest first.";
+const { label, description } = SECTIONS.gazette;
 ---
 
-<BaseLayout title="Gazette" description={lead}>
+<BaseLayout title={label} description={description}>
   <Container>
-    <PageHeader title="Gazette" lead={lead} />
+    <PageHeader title={label} lead={description} />
     <LorePlaceholder what="Gazette entries will be listed here." />
   </Container>
 </BaseLayout>

@@ -3,13 +3,14 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 import Container from "../../components/Container.astro";
 import LorePlaceholder from "../../components/LorePlaceholder.astro";
 import PageHeader from "../../components/PageHeader.astro";
+import { SECTIONS } from "../../config/site";
 
-const lead = "An interactive map of the republic's builds.";
+const { label, description } = SECTIONS.builds;
 ---
 
-<BaseLayout title="Builds" description={lead}>
+<BaseLayout title={label} description={description}>
   <Container>
-    <PageHeader title="Builds" lead={lead} />
+    <PageHeader title={label} lead={description} />
     <LorePlaceholder what="The map of the territory and its builds will appear here." />
   </Container>
 </BaseLayout>

@@ -1,8 +1,49 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import { SITE } from "../config/site";
+import ButtonLink from "../components/ButtonLink.astro";
+import Container from "../components/Container.astro";
+import LorePlaceholder from "../components/LorePlaceholder.astro";
+import SectionCard from "../components/SectionCard.astro";
+import { SECTIONS, SITE } from "../config/site";
+
+const sections = Object.values(SECTIONS);
 ---
 
 <BaseLayout>
-  <h1>{SITE.name}</h1>
+  <section aria-labelledby="hero-title" class="relative isolate overflow-hidden">
+    <div aria-hidden="true" class="absolute inset-0 -z-10 bg-(image:--gradient-hero-glow)"></div>
+    <Container class="py-24 sm:py-32">
+      <p class="text-sm font-semibold tracking-widest text-accent-soft uppercase">
+        A Minecraft republic inspired by Venice
+      </p>
+      <h1 id="hero-title" class="mt-4 text-display gradient-text">
+        {SITE.name}
+      </h1>
+      <div class="mt-8 max-w-xl">
+        <LorePlaceholder what="Motto and a short introduction to the republic." />
+      </div>
+      <div class="mt-10 flex flex-wrap gap-3">
+        <ButtonLink href={SECTIONS.gazette.href}>Read the Gazette</ButtonLink>
+        <ButtonLink href={SECTIONS.builds.href} variant="secondary">
+          Explore the builds
+        </ButtonLink>
+      </div>
+      {/* Phase 5: the 3D model of the nation (<model-viewer>) goes here. */}
+    </Container>
+  </section>
+
+  <Container>
+    <h2 class="text-2xl font-bold">Explore</h2>
+    <ul class="mt-6 grid gap-4 sm:grid-cols-3">
+      {sections.map((section) => (
+        <li>
+          <SectionCard
+            href={section.href}
+            title={section.label}
+            description={section.description}
+          />
+        </li>
+      ))}
+    </ul>
+  </Container>
 </BaseLayout>

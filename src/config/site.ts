@@ -22,10 +22,34 @@ export interface NavItem {
   label: string;
 }
 
+export interface Section extends NavItem {
+  /** One line, used as the page lead and on the home page cards. */
+  description: string;
+}
+
+/** The site's sections, used by the navigation, the home page and the section pages. */
+export const SECTIONS = {
+  gazette: {
+    href: "/gazette/",
+    label: "Gazette",
+    description: "Announcements, public works and official communications, newest first.",
+  },
+  history: {
+    href: "/history/",
+    label: "History",
+    description: "The story of the republic, chapter by chapter.",
+  },
+  builds: {
+    href: "/builds/",
+    label: "Builds",
+    description: "An interactive map of the republic's builds.",
+  },
+} as const satisfies Record<string, Section>;
+
 /** Main navigation, in display order. */
 export const NAV_ITEMS: readonly NavItem[] = [
   { href: "/", label: "Home" },
-  { href: "/gazette/", label: "Gazette" },
-  { href: "/history/", label: "History" },
-  { href: "/builds/", label: "Builds" },
+  SECTIONS.gazette,
+  SECTIONS.history,
+  SECTIONS.builds,
 ];

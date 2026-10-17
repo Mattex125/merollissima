@@ -1,0 +1,26 @@
+---
+/** A link styled as a button. Use it for navigation, never for actions. */
+interface Props {
+  href: string;
+  variant?: "primary" | "secondary";
+}
+
+const { href, variant = "primary" } = Astro.props;
+
+// Complete class strings, so Tailwind can find them in the source.
+// Primary: white on amethyst-600 is 5.5:1 (white on amethyst-500 would fail AA).
+const variants = {
+  primary: "bg-accent-strong text-white shadow-glow-sm hover:bg-amethyst-700",
+  secondary: "border border-line-strong text-ink hover:bg-surface",
+} as const;
+---
+
+<a
+  href={href}
+  class:list={[
+    "inline-flex min-h-11 items-center justify-center rounded-control px-5 font-semibold motion-safe:transition-colors",
+    variants[variant],
+  ]}
+>
+  <slot />
+</a>
