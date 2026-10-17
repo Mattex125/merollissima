@@ -54,9 +54,9 @@ git config core.hooksPath .githooks
 src/
   components/   Small, focused Astro components (header, footer, cards, ...)
   config/       Site-wide values: name, navigation, sections, links
-  content/      Content files: one folder per Gazette entry, images next to the text
+  content/      Gazette entries (one folder each) and History chapters, images next to the text
   layouts/      BaseLayout: document head, skip link, header, main, footer
-  lib/          Content helpers (Gazette numbering) and formatting
+  lib/          Content helpers (Gazette numbering, History chapters) and formatting
   pages/        File-based routes: /, /gazette/, /gazette/<slug>/, /history/, /builds/, 404
   styles/       global.css: Tailwind and every design token
   content.config.ts   Collection schemas
@@ -97,6 +97,27 @@ Body text in Markdown. Headings start at `##`. Up to about two inline images:
 
 The market entry uses placeholder images: replace them with real screenshots, keeping the file
 names, and update the alt texts.
+
+### History chapters
+
+The History page is a single document assembled from one Markdown file per chapter in
+`src/content/history/`. The file name is the chapter's anchor (`/history/#<file-name>`).
+
+```md
+---
+title: The Founding
+order: 1 # position on the page; must be unique
+photo: ./the-founding.png # optional, shown at the end of the chapter
+photoAlt: Describe the photo. # required when photo is set
+photoCaption: Optional caption.
+---
+
+Chapter text. Subsections, if any, start at `###`.
+```
+
+- Until a chapter has a photo, a visible "TODO: photo" placeholder marks its place.
+- The build fails if two chapters share an `order` or if two anchors on the page collide.
+- The chapters come from the owner's lore document, which is the single source of truth.
 
 ## Design system
 
@@ -141,7 +162,7 @@ The site is built from a private Minecraft world. World files never enter this r
 
 - [x] **Setup**: Astro, TypeScript, Tailwind, base layout, navigation, footer, design tokens
 - [x] **Gazette**: official announcements, numbered by date
-- [ ] **History**: the republic's story as a single, readable document
+- [x] **History**: the republic's story as a single, readable document
 - [ ] **Builds map**: interactive map of the territory with one marker per build
 - [ ] **3D hero**: a slowly rotating model of the whole nation on the home page
 - [ ] **Polish**: Open Graph images, sitemap, RSS feed, accessibility pass
