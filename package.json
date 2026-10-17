@@ -20,6 +20,7 @@
     "astro": "astro"
   },
   "dependencies": {
+    "@tailwindcss/typography": "^0.5.20",
     "@tailwindcss/vite": "^4.3.3",
     "astro": "^7.4.0",
     "tailwindcss": "^4.3.3"
@@ -30,5 +31,8 @@
     "prettier": "^3.9.10",
     "prettier-plugin-astro": "^1.1.1",
     "typescript": "~6.0.3"
+  },
+  "overrides": {
+    "postcss-selector-parser": "^7.1.6"
   }
 }

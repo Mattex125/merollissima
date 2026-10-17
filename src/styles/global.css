@@ -6,6 +6,7 @@
  * or var(--color-*) in <style> blocks. Never hard-code hex values anywhere else.
  */
 @import "tailwindcss";
+@plugin "@tailwindcss/typography";
 
 /* Remove Tailwind's default palette so that only our tokens exist.
    This block must come before the tokens below, or it would clear them too. */
@@ -95,6 +96,29 @@
   background-image: var(--gradient-amethyst);
   background-clip: text;
   color: transparent;
+}
+
+/* Long-form text (Gazette entries, History). Use with `prose`: class="prose prose-amethyst".
+   The site is dark only, so the base prose colours are set directly (no prose-invert). */
+@utility prose-amethyst {
+  --tw-prose-body: var(--color-ink);
+  --tw-prose-headings: var(--color-white);
+  --tw-prose-lead: var(--color-muted);
+  --tw-prose-links: var(--color-accent-soft);
+  --tw-prose-bold: var(--color-white);
+  --tw-prose-counters: var(--color-muted);
+  --tw-prose-bullets: var(--color-accent);
+  --tw-prose-hr: var(--color-line);
+  --tw-prose-quotes: var(--color-ink);
+  --tw-prose-quote-borders: var(--color-accent);
+  --tw-prose-captions: var(--color-muted);
+  --tw-prose-kbd: var(--color-ink);
+  --tw-prose-kbd-shadows: color-mix(in oklab, var(--color-ink) 15%, transparent);
+  --tw-prose-code: var(--color-amethyst-200);
+  --tw-prose-pre-code: var(--color-ink);
+  --tw-prose-pre-bg: var(--color-surface);
+  --tw-prose-th-borders: var(--color-line-strong);
+  --tw-prose-td-borders: var(--color-line);
 }
 
 @layer base {

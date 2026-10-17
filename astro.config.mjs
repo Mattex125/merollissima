@@ -10,6 +10,8 @@ export default defineConfig({
   // vercel.json ("trailingSlash": true) enforces the same policy in production.
   trailingSlash: "always",
   build: { format: "directory" },
+  // Responsive images by default: srcset, sizes and styles, also for Markdown images.
+  image: { layout: "constrained", responsiveStyles: true },
   // Self-hosted fonts: downloaded at build time and served from our own domain.
   fonts: [
     {
