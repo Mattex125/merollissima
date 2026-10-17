@@ -16,7 +16,7 @@ extend.
 - TypeScript in strict mode, checked with `astro check`
 - [Tailwind CSS 4](https://tailwindcss.com) with CSS-first design tokens
 - Self-hosted fonts (Bricolage Grotesque, Geist) through the Astro Fonts API
-- Content collections with typed schemas (from the Gazette phase on)
+- Content collections with typed schemas, validated at build time
 - Leaflet for the builds map and `<model-viewer>` for the 3D hero (planned)
 - Hosted on [Vercel](https://vercel.com); CI on GitHub Actions
 
@@ -54,12 +54,49 @@ git config core.hooksPath .githooks
 src/
   components/   Small, focused Astro components (header, footer, cards, ...)
   config/       Site-wide values: name, navigation, sections, links
+  content/      Content files: one folder per Gazette entry, images next to the text
   layouts/      BaseLayout: document head, skip link, header, main, footer
-  pages/        File-based routes: /, /gazette/, /history/, /builds/, 404
+  lib/          Content helpers (Gazette numbering) and formatting
+  pages/        File-based routes: /, /gazette/, /gazette/<slug>/, /history/, /builds/, 404
   styles/       global.css: Tailwind and every design token
+  content.config.ts   Collection schemas
 public/         Static files served as-is (favicon)
 scripts/        Repository guards used by the pre-commit hook and CI
 ```
+
+## Writing content
+
+### Gazette entries
+
+Each entry is a folder in `src/content/gazette/` with an `index.md` and its images. The folder name
+becomes the URL (`/gazette/<folder>/`), so pick a short English slug and never rename it once
+published.
+
+```md
+---
+title: The Merollissima market opens
+date: 2026-09-14
+summary: One line, shown in lists and on the home page.
+cover: ./cover.png # optional
+coverAlt: Describe the cover image. # required when cover is set
+pinned: false # optional; pinned entries come first on the home page
+---
+
+Body text in Markdown. Headings start at `##`. Up to about two inline images:
+
+![Describe the image.](./detail.png)
+```
+
+- Entries are numbered automatically from 0 ("No. 0" is the oldest), so numbers are never
+  written by hand. An entry dated before existing ones shifts their numbers.
+- The build fails if the frontmatter is invalid (including a missing or malformed date), if a
+  cover has no `coverAlt`, or if an inline image has no alt text.
+- Images are resized and converted to WebP at build time. The text column is 672px wide, so
+  sources about 1344px wide are enough, even for high-density screens.
+- Commit new entries with the `content:` type.
+
+The market entry uses placeholder images: replace them with real screenshots, keeping the file
+names, and update the alt texts.
 
 ## Design system
 
@@ -103,7 +140,7 @@ The site is built from a private Minecraft world. World files never enter this r
 ## Roadmap
 
 - [x] **Setup**: Astro, TypeScript, Tailwind, base layout, navigation, footer, design tokens
-- [ ] **Gazette**: official announcements, numbered by date
+- [x] **Gazette**: official announcements, numbered by date
 - [ ] **History**: the republic's story as a single, readable document
 - [ ] **Builds map**: interactive map of the territory with one marker per build
 - [ ] **3D hero**: a slowly rotating model of the whole nation on the home page
