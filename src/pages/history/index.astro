@@ -1,6 +1,7 @@
 ---
 import { render } from "astro:content";
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import ChapterPhoto from "../../components/ChapterPhoto.astro";
 import Container from "../../components/Container.astro";
 import LorePlaceholder from "../../components/LorePlaceholder.astro";
 import PageHeader from "../../components/PageHeader.astro";
@@ -59,6 +60,12 @@ for (const { chapter, headings } of chapters) {
               <div class="prose mt-6 prose-amethyst">
                 <Content />
               </div>
+              <ChapterPhoto
+                chapter={chapter.data.title}
+                photo={chapter.data.photo}
+                alt={chapter.data.photoAlt}
+                caption={chapter.data.photoCaption}
+              />
             </section>
           ))}
         </div>

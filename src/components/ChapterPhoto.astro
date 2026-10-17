@@ -1,0 +1,28 @@
+---
+import type { ImageMetadata } from "astro";
+import { Image } from "astro:assets";
+
+/** The photo at the end of a History chapter, or a visible placeholder while it is missing. */
+interface Props {
+  /** Chapter title, used to describe the missing photo. */
+  chapter: string;
+  photo?: ImageMetadata | undefined;
+  alt?: string | undefined;
+  caption?: string | undefined;
+}
+
+const { chapter, photo, alt, caption } = Astro.props;
+---
+
+{photo && alt ? (
+  <figure class="mt-8 max-w-prose">
+    <Image src={photo} alt={alt} width={672} class="w-full rounded-card border border-line" />
+    {caption && <figcaption class="mt-2 text-sm text-muted">{caption}</figcaption>}
+  </figure>
+) : (
+  <div class="mt-8 flex aspect-video max-w-prose items-center justify-center rounded-card border border-dashed border-line-strong px-4 text-center">
+    <p class="text-sm text-muted">
+      <strong class="font-semibold text-accent-soft">TODO: photo</strong> · A photo for “{chapter}”.
+    </p>
+  </div>
+)}
