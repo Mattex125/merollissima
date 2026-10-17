@@ -1,0 +1,16 @@
+---
+/**
+ * Visible marker for content that is not written yet.
+ * Renders "TODO: lore" so open items are easy to spot on previews and to grep.
+ */
+interface Props {
+  /** What is missing, e.g. "Motto of the republic." */
+  what: string;
+}
+
+const { what } = Astro.props;
+---
+
+<p class="rounded-card border border-dashed border-line-strong px-4 py-3 text-sm text-muted">
+  <strong class="font-semibold text-accent-soft">TODO: lore</strong> · {what}
+</p>

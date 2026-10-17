@@ -1,0 +1,15 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Container from "../../components/Container.astro";
+import LorePlaceholder from "../../components/LorePlaceholder.astro";
+import PageHeader from "../../components/PageHeader.astro";
+
+const lead = "The story of the republic, chapter by chapter.";
+---
+
+<BaseLayout title="History" description={lead}>
+  <Container>
+    <PageHeader title="History" lead={lead} />
+    <LorePlaceholder what="History chapters will be published here." />
+  </Container>
+</BaseLayout>

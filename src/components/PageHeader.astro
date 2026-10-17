@@ -1,0 +1,15 @@
+---
+/** Title block at the top of a page: the page's only <h1> and an optional lead. */
+interface Props {
+  title: string;
+  lead?: string;
+}
+
+const { title, lead } = Astro.props;
+---
+
+<header class="pt-16 pb-10 sm:pt-24">
+  <h1 class="text-4xl font-extrabold sm:text-5xl">{title}</h1>
+  {lead && <p class="mt-4 max-w-2xl text-lg text-muted">{lead}</p>}
+  <slot />
+</header>

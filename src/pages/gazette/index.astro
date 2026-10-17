@@ -1,0 +1,15 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Container from "../../components/Container.astro";
+import LorePlaceholder from "../../components/LorePlaceholder.astro";
+import PageHeader from "../../components/PageHeader.astro";
+
+const lead = "Announcements, public works and official communications, newest first.";
+---
+
+<BaseLayout title="Gazette" description={lead}>
+  <Container>
+    <PageHeader title="Gazette" lead={lead} />
+    <LorePlaceholder what="Gazette entries will be listed here." />
+  </Container>
+</BaseLayout>
