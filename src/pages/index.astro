@@ -2,11 +2,14 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import ButtonLink from "../components/ButtonLink.astro";
 import Container from "../components/Container.astro";
+import GazetteEntryCard from "../components/GazetteEntryCard.astro";
 import LorePlaceholder from "../components/LorePlaceholder.astro";
 import SectionCard from "../components/SectionCard.astro";
 import { SECTIONS, SITE } from "../config/site";
+import { getLatestGazette } from "../lib/gazette";
 
 const sections = Object.values(SECTIONS);
+const latest = await getLatestGazette(3);
 ---
 
 <BaseLayout>
@@ -31,6 +34,31 @@ const sections = Object.values(SECTIONS);
       {/* Phase 5: the 3D model of the nation (<model-viewer>) goes here. */}
     </Container>
   </section>
+
+  {latest.length > 0 && (
+    <Container class="pb-16">
+      <section aria-labelledby="latest-title">
+        <div class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-2">
+          <h2 id="latest-title" class="text-2xl font-bold">
+            Latest from the Gazette
+          </h2>
+          <a
+            href={SECTIONS.gazette.href}
+            class="inline-flex min-h-11 items-center text-sm font-medium text-accent-soft underline hover:decoration-2"
+          >
+            All entries
+          </a>
+        </div>
+        <ul class="mt-6 grid gap-4 md:grid-cols-3">
+          {latest.map((item) => (
+            <li>
+              <GazetteEntryCard {...item} headingLevel={3} />
+            </li>
+          ))}
+        </ul>
+      </section>
+    </Container>
+  )}
 
   <Container>
     <h2 class="text-2xl font-bold">Explore</h2>
