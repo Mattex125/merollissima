@@ -1,16 +1,28 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import Container from "../../components/Container.astro";
-import LorePlaceholder from "../../components/LorePlaceholder.astro";
+import GazetteEntryCard from "../../components/GazetteEntryCard.astro";
 import PageHeader from "../../components/PageHeader.astro";
 import { SECTIONS } from "../../config/site";
+import { getGazette } from "../../lib/gazette";
 
 const { label, description } = SECTIONS.gazette;
+const entries = await getGazette();
 ---
 
 <BaseLayout title={label} description={description}>
   <Container>
     <PageHeader title={label} lead={description} />
-    <LorePlaceholder what="Gazette entries will be listed here." />
+    {entries.length > 0 ? (
+      <ol class="grid max-w-3xl gap-4">
+        {entries.map((item) => (
+          <li>
+            <GazetteEntryCard {...item} />
+          </li>
+        ))}
+      </ol>
+    ) : (
+      <p class="text-muted">No entries yet.</p>
+    )}
   </Container>
 </BaseLayout>
