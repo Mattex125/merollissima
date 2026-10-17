@@ -1,0 +1,46 @@
+---
+import Container from "./Container.astro";
+import { NAV_ITEMS, SITE } from "../config/site";
+
+// "/gazette" and "/gazette/" compare equal, so this also works in dev.
+const normalize = (path: string) => (path.length > 1 ? path.replace(/\/+$/, "") : path);
+const currentPath = normalize(Astro.url.pathname);
+
+/**
+ * "page" on the exact page, "true" inside its section (e.g. a Gazette entry).
+ * undefined omits the attribute: aria-current={false} would render "false".
+ */
+function ariaCurrent(href: string): "page" | "true" | undefined {
+  const target = normalize(href);
+  if (currentPath === target) return "page";
+  if (target !== "/" && currentPath.startsWith(`${target}/`)) return "true";
+  return undefined;
+}
+---
+
+<header class="border-b border-line bg-canvas/85 backdrop-blur-md sm:sticky sm:top-0 sm:z-40">
+  <Container class="flex flex-col gap-1 py-3 sm:flex-row sm:items-center sm:justify-between sm:gap-6">
+    <a
+      href="/"
+      class="inline-flex min-h-11 items-center gap-2 self-start font-display text-lg font-extrabold tracking-tight text-ink sm:self-auto"
+    >
+      <img src="/favicon.svg" alt="" width="24" height="24" />
+      {SITE.name}
+    </a>
+    <nav aria-label="Main">
+      <ul class="-mx-3 flex flex-wrap gap-1 sm:mx-0">
+        {NAV_ITEMS.map(({ href, label }) => (
+          <li>
+            <a
+              href={href}
+              aria-current={ariaCurrent(href)}
+              class="inline-flex min-h-11 items-center rounded-control px-3 text-sm font-medium text-muted hover:text-ink motion-safe:transition-colors aria-[current=page]:bg-surface aria-[current=page]:text-ink aria-[current=page]:shadow-glow-sm aria-[current=true]:text-ink"
+            >
+              {label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  </Container>
+</header>

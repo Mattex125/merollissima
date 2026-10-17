@@ -1,5 +1,6 @@
 ---
 import { Font } from "astro:assets";
+import SiteHeader from "../components/SiteHeader.astro";
 import { SITE } from "../config/site";
 import "../styles/global.css";
 
@@ -15,7 +16,8 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 ---
 
 <!doctype html>
-<html lang={SITE.lang}>
+{/* scroll-pt keeps focused elements and #anchors clear of the sticky header (sm and up). */}
+<html lang={SITE.lang} class="sm:scroll-pt-20">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -34,7 +36,14 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     <Font cssVariable="--font-bricolage" preload={[{ style: "normal", subset: "latin" }]} />
   </head>
   <body class="flex min-h-dvh flex-col">
-    <main id="main" class="flex-1">
+    <a
+      href="#main"
+      class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:rounded-control focus:bg-accent-soft focus:px-4 focus:py-2 focus:font-semibold focus:text-canvas"
+    >
+      Skip to content
+    </a>
+    <SiteHeader />
+    <main id="main" tabindex="-1" class="flex-1 focus:outline-hidden">
       <slot />
     </main>
   </body>
