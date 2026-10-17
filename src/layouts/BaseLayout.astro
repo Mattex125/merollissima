@@ -1,5 +1,6 @@
 ---
 import { SITE } from "../config/site";
+import "../styles/global.css";
 
 interface Props {
   /** Page title. Omit it on the home page to show only the site name. */
@@ -17,6 +18,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="dark" />
     <title>{pageTitle}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonicalURL.href} />
@@ -28,8 +30,8 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonicalURL.href} />
   </head>
-  <body>
-    <main id="main">
+  <body class="flex min-h-dvh flex-col">
+    <main id="main" class="flex-1">
       <slot />
     </main>
   </body>

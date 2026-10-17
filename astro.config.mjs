@@ -1,5 +1,6 @@
 // @ts-check
 import { defineConfig } from "astro/config";
+import tailwindcss from "@tailwindcss/vite";
 
 // https://docs.astro.build/en/reference/configuration-reference/
 export default defineConfig({
@@ -9,4 +10,5 @@ export default defineConfig({
   // vercel.json ("trailingSlash": true) enforces the same policy in production.
   trailingSlash: "always",
   build: { format: "directory" },
+  vite: { plugins: [tailwindcss()] },
 });

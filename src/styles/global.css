@@ -1,0 +1,150 @@
+/*
+ * Tailwind CSS v4 and the La Merollissima design tokens.
+ *
+ * Every colour, radius, shadow and gradient is defined ONCE, here.
+ * Components use the generated utilities (bg-surface, text-muted, shadow-glow, ...)
+ * or var(--color-*) in <style> blocks. Never hard-code hex values anywhere else.
+ */
+@import "tailwindcss";
+
+/* Remove Tailwind's default palette so that only our tokens exist.
+   This block must come before the tokens below, or it would clear them too. */
+@theme {
+  --color-*: initial;
+}
+
+/* `static`: always emit these CSS variables, even when no utility uses them,
+   so var(--color-*) also works in <style> blocks and third-party CSS. */
+@theme static {
+  --color-white: #fff;
+  --color-black: #000;
+
+  /* Amethyst accent scale. 300 and 500 are the brand colours. */
+  --color-amethyst-50: oklch(97.5% 0.014 302);
+  --color-amethyst-100: oklch(94.6% 0.03 302);
+  --color-amethyst-200: oklch(90% 0.058 303);
+  --color-amethyst-300: #cfa8ff;
+  --color-amethyst-400: oklch(70.8% 0.18 302);
+  --color-amethyst-500: #9a5cf0;
+  --color-amethyst-600: oklch(54.5% 0.215 297);
+  --color-amethyst-700: oklch(48.5% 0.195 296);
+  --color-amethyst-800: oklch(42% 0.165 295);
+  --color-amethyst-900: oklch(36% 0.13 295);
+  --color-amethyst-950: oklch(27% 0.095 295);
+
+  /* Semantic roles: prefer these in components. */
+  --color-canvas: #0d0a14; /* page background */
+  --color-surface: #161122; /* cards, raised areas */
+  --color-surface-raised: #1d162c; /* hover state of surfaces */
+  --color-line: #2a2140; /* decorative borders */
+  --color-line-strong: #6d6287; /* borders of controls (>= 3:1 contrast) */
+  --color-ink: #ece8f5; /* body text */
+  --color-muted: #a69cb8; /* secondary text */
+  --color-accent: var(--color-amethyst-500); /* fills, icons, large text only */
+  --color-accent-soft: var(--color-amethyst-300); /* links (always underlined), focus ring */
+  --color-accent-strong: var(--color-amethyst-600); /* filled buttons with white text */
+  --color-danger: oklch(72% 0.16 22);
+  --color-success: oklch(78% 0.15 155);
+
+  --radius-control: 0.625rem;
+  --radius-card: 1rem;
+
+  --shadow-glow-sm: 0 0 12px -2px color-mix(in oklab, var(--color-amethyst-500) 45%, transparent);
+  --shadow-glow: 0 0 32px -6px color-mix(in oklab, var(--color-amethyst-500) 55%, transparent);
+  --shadow-glow-lg:
+    0 0 0 1px color-mix(in oklab, var(--color-amethyst-400) 35%, transparent),
+    0 0 64px -12px color-mix(in oklab, var(--color-amethyst-500) 60%, transparent);
+  --shadow-card:
+    inset 0 1px 0 0 color-mix(in oklab, var(--color-ink) 6%, transparent),
+    0 16px 40px -16px rgb(0 0 0 / 0.7);
+  --drop-shadow-glow: 0 0 10px color-mix(in oklab, var(--color-amethyst-400) 60%, transparent);
+  --text-shadow-glow: 0 0 18px color-mix(in oklab, var(--color-amethyst-400) 55%, transparent);
+
+  /* Large hero headings. */
+  --text-display: clamp(2.5rem, 1.6rem + 4.5vw, 5rem);
+  --text-display--line-height: 1.02;
+  --text-display--letter-spacing: -0.03em;
+  --text-display--font-weight: 800;
+
+  --ease-out-soft: cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+/* Gradients have no theme namespace. Usage: class="bg-(image:--gradient-hero-glow)" */
+:root {
+  --gradient-amethyst: linear-gradient(
+    135deg in oklch,
+    var(--color-amethyst-300),
+    var(--color-amethyst-600)
+  );
+  --gradient-hero-glow: radial-gradient(
+    60% 50% at 50% 0%,
+    color-mix(in oklab, var(--color-amethyst-500) 35%, transparent),
+    transparent 70%
+  );
+}
+
+/* Large display text only: the darker end of the gradient is about 3.6:1 on canvas. */
+@utility gradient-text {
+  background-image: var(--gradient-amethyst);
+  background-clip: text;
+  color: transparent;
+}
+
+@layer base {
+  :root {
+    color-scheme: dark;
+    accent-color: var(--color-amethyst-400);
+    scrollbar-color: var(--color-line-strong) var(--color-canvas);
+  }
+
+  html {
+    background-color: var(--color-canvas);
+    color: var(--color-ink);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1,
+  h2,
+  h3 {
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-line);
+  }
+
+  ::selection {
+    background-color: color-mix(in oklab, var(--color-amethyst-500) 45%, transparent);
+    color: var(--color-ink);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-accent-soft);
+    outline-offset: 3px;
+  }
+
+  a {
+    text-underline-offset: 0.2em;
+  }
+
+  /* Respect the OS "reduce motion" setting. !important in an earlier layer beats utilities. */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    ::before,
+    ::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
