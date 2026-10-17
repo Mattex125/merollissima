@@ -69,6 +69,13 @@
   --ease-out-soft: cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
+/* Fonts come from the Astro Fonts API (astro.config.mjs). `inline` makes the
+   font-sans and font-display utilities use Astro's variables directly. */
+@theme inline {
+  --font-sans: var(--font-geist);
+  --font-display: var(--font-bricolage);
+}
+
 /* Gradients have no theme namespace. Usage: class="bg-(image:--gradient-hero-glow)" */
 :root {
   --gradient-amethyst: linear-gradient(
@@ -106,6 +113,7 @@
   h1,
   h2,
   h3 {
+    font-family: var(--font-display);
     letter-spacing: -0.02em;
     text-wrap: balance;
   }

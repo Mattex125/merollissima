@@ -1,4 +1,5 @@
 ---
+import { Font } from "astro:assets";
 import { SITE } from "../config/site";
 import "../styles/global.css";
 
@@ -29,6 +30,8 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonicalURL.href} />
+    <Font cssVariable="--font-geist" preload={[{ style: "normal", subset: "latin" }]} />
+    <Font cssVariable="--font-bricolage" preload={[{ style: "normal", subset: "latin" }]} />
   </head>
   <body class="flex min-h-dvh flex-col">
     <main id="main" class="flex-1">
