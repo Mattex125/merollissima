@@ -1,0 +1,87 @@
+---
+import type { GalleryPhoto } from "../lib/gallery";
+
+/** Photo collage behind the home page. Render it only when the pool has photos. */
+interface Props {
+  photos: GalleryPhoto[];
+}
+
+const { photos } = Astro.props;
+
+// A bento layout that fills the screen: 2 columns x 3 rows on small screens
+// (tiles 1-4), 4 columns x 3 rows from lg (all 7 tiles). Complete class strings,
+// so Tailwind can find them.
+const tiles = [
+  "col-span-2 lg:row-span-2",
+  "",
+  "row-span-2",
+  "",
+  "hidden lg:block",
+  "hidden lg:col-span-2 lg:block",
+  "hidden lg:block",
+];
+---
+
+<div aria-hidden="true" class="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
+  <div
+    data-collage
+    class="grid h-full grid-flow-dense grid-cols-2 grid-rows-3 gap-3 p-3 opacity-0 motion-safe:transition-opacity motion-safe:duration-1000 lg:grid-cols-4"
+  >
+    {tiles.map((span) => (
+      <div data-collage-tile class:list={["overflow-hidden rounded-card bg-surface", span]} />
+    ))}
+  </div>
+  {/*
+      Keeps text readable over any photo, even pure white: 92% canvas over the top half
+      of the screen (hero title and muted text), 70% from three quarters down, where only
+      light text sits directly on the photos (ink >= 7:1, accent-soft >= 4.5:1).
+    */}
+  <div class="absolute inset-0 bg-linear-to-b from-canvas/92 from-50% to-canvas/70 to-75%"></div>
+  <script type="application/json" data-collage-pool set:html={JSON.stringify(photos)} />
+</div>
+
+<script>
+  // On every page load, fill the visible tiles with a random selection from the pool.
+  interface Photo {
+    src: string;
+    srcset: string;
+  }
+
+  const collage = document.querySelector<HTMLElement>("[data-collage]");
+  const pool: Photo[] = JSON.parse(
+    document.querySelector("[data-collage-pool]")?.textContent ?? "[]",
+  );
+
+  if (collage && pool.length > 0) {
+    // Fisher-Yates shuffle.
+    for (let i = pool.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [pool[i], pool[j]] = [pool[j]!, pool[i]!];
+    }
+
+    // Only the tiles shown at the current screen size, so hidden ones never download a photo.
+    const tiles = [...collage.querySelectorAll<HTMLElement>("[data-collage-tile]")].filter(
+      (tile) => tile.getClientRects().length > 0,
+    );
+
+    let pending = tiles.length;
+    const reveal = () => {
+      pending -= 1;
+      if (pending === 0) collage.classList.remove("opacity-0");
+    };
+
+    tiles.forEach((tile, index) => {
+      const photo = pool[index % pool.length]!;
+      const image = document.createElement("img");
+      image.alt = "";
+      image.decoding = "async";
+      image.sizes = "(min-width: 1024px) 50vw, 100vw";
+      image.className = "size-full object-cover brightness-80";
+      image.addEventListener("load", reveal, { once: true });
+      image.addEventListener("error", reveal, { once: true });
+      image.srcset = photo.srcset;
+      image.src = photo.src;
+      tile.append(image);
+    });
+  }
+</script>

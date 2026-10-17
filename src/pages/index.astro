@@ -3,16 +3,20 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import ButtonLink from "../components/ButtonLink.astro";
 import Container from "../components/Container.astro";
 import GazetteEntryCard from "../components/GazetteEntryCard.astro";
+import HomeCollage from "../components/HomeCollage.astro";
 import LorePlaceholder from "../components/LorePlaceholder.astro";
 import SectionCard from "../components/SectionCard.astro";
 import { SECTIONS, SITE } from "../config/site";
+import { getGalleryPhotos } from "../lib/gallery";
 import { getLatestGazette } from "../lib/gazette";
 
 const sections = Object.values(SECTIONS);
 const latest = await getLatestGazette(3);
+const galleryPhotos = await getGalleryPhotos();
 ---
 
 <BaseLayout>
+  {galleryPhotos.length > 0 && <HomeCollage photos={galleryPhotos} />}
   <section aria-labelledby="hero-title" class="relative isolate overflow-hidden">
     <div aria-hidden="true" class="absolute inset-0 -z-10 bg-(image:--gradient-hero-glow)"></div>
     <Container class="py-24 sm:py-32">
