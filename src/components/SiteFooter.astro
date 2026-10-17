@@ -1,0 +1,20 @@
+---
+import Container from "./Container.astro";
+import { DISCLAIMER, OWNER, REPO_URL } from "../config/site";
+---
+
+<footer class="mt-24 border-t border-line">
+  <Container class="flex flex-col gap-4 py-10 text-sm text-muted">
+    <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+      <p>
+        Discord: <span class="font-medium text-ink">{OWNER.discord}</span>
+      </p>
+      <p>
+        <a href={REPO_URL} class="text-accent-soft underline hover:decoration-2">
+          Source code on GitHub
+        </a>
+      </p>
+    </div>
+    <p class="text-xs">{DISCLAIMER}</p>
+  </Container>
+</footer>

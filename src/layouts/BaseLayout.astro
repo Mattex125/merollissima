@@ -1,5 +1,6 @@
 ---
 import { Font } from "astro:assets";
+import SiteFooter from "../components/SiteFooter.astro";
 import SiteHeader from "../components/SiteHeader.astro";
 import { SITE } from "../config/site";
 import "../styles/global.css";
@@ -46,5 +47,6 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     <main id="main" tabindex="-1" class="flex-1 focus:outline-hidden">
       <slot />
     </main>
+    <SiteFooter />
   </body>
 </html>

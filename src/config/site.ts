@@ -7,6 +7,15 @@ export const SITE = {
   ogLocale: "en_US",
 } as const;
 
+/** The owner appears only by nickname. */
+export const OWNER = { nickname: "mattex125", discord: "mattex125" } as const;
+
+export const REPO_URL = "https://github.com/Mattex125/merollissima";
+
+/** Wording recommended by the Minecraft Usage Guidelines. */
+export const DISCLAIMER =
+  "Not an official Minecraft website. Not approved by or associated with Mojang or Microsoft.";
+
 export interface NavItem {
   /** Always ends with "/" (trailingSlash: "always"). */
   href: string;
