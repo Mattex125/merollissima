@@ -1,0 +1,14 @@
+---
+/**
+ * A quiet, modern backdrop for text pages: soft amethyst glows at the edges and a fine dot
+ * grid that fades out towards the bottom. Pure CSS: no images, no JavaScript, no motion.
+ * The glows stay dark enough for any text to keep its contrast.
+ */
+---
+
+<div aria-hidden="true" class="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
+  <div class="absolute inset-0 bg-dot-grid"></div>
+  <div class="absolute -top-48 -left-40 size-[38rem] rounded-full bg-amethyst-600/25 blur-3xl"></div>
+  <div class="absolute top-1/3 -right-48 size-[32rem] rounded-full bg-amethyst-400/12 blur-3xl"></div>
+  <div class="absolute -bottom-64 left-1/4 size-[44rem] rounded-full bg-amethyst-800/30 blur-3xl"></div>
+</div>

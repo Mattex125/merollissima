@@ -98,6 +98,16 @@
   color: transparent;
 }
 
+/* A fine dot grid that fades out towards the bottom (used by AuroraBackground). */
+@utility bg-dot-grid {
+  background-image: radial-gradient(
+    color-mix(in oklab, var(--color-amethyst-300) 32%, transparent) 1px,
+    transparent 1.5px
+  );
+  background-size: 28px 28px;
+  mask-image: radial-gradient(ellipse 90% 70% at 50% 0%, black, transparent 80%);
+}
+
 /* Long-form text (Gazette entries, History). Use with `prose`: class="prose prose-amethyst".
    The site is dark only, so the base prose colours are set directly (no prose-invert). */
 @utility prose-amethyst {

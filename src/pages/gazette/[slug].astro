@@ -3,6 +3,7 @@ import type { GetStaticPaths, InferGetStaticPropsType } from "astro";
 import { Image } from "astro:assets";
 import { render } from "astro:content";
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import AuroraBackground from "../../components/AuroraBackground.astro";
 import Container from "../../components/Container.astro";
 import { formatDate, isoDate } from "../../lib/format";
 import { getGazette } from "../../lib/gazette";
@@ -27,6 +28,7 @@ const { Content } = await render(entry);
 ---
 
 <BaseLayout title={title} description={summary}>
+  <AuroraBackground />
   <Container>
     <article class="mx-auto max-w-2xl pt-12 sm:pt-16">
       <a

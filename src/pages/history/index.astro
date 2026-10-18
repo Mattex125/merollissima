@@ -1,6 +1,7 @@
 ---
 import { render } from "astro:content";
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import AuroraBackground from "../../components/AuroraBackground.astro";
 import ChapterPhoto from "../../components/ChapterPhoto.astro";
 import Container from "../../components/Container.astro";
 import LorePlaceholder from "../../components/LorePlaceholder.astro";
@@ -29,6 +30,7 @@ for (const { chapter, headings } of chapters) {
 ---
 
 <BaseLayout title={label} description={description}>
+  <AuroraBackground />
   <Container>
     <PageHeader title={label} lead={description} />
     {chapters.length > 0 ? (

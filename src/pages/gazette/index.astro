@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import AuroraBackground from "../../components/AuroraBackground.astro";
 import Container from "../../components/Container.astro";
 import GazetteEntryCard from "../../components/GazetteEntryCard.astro";
 import PageHeader from "../../components/PageHeader.astro";
@@ -11,6 +12,7 @@ const entries = await getGazette();
 ---
 
 <BaseLayout title={label} description={description}>
+  <AuroraBackground />
   <Container>
     <PageHeader title={label} lead={description} />
     {entries.length > 0 ? (
