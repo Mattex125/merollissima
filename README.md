@@ -126,7 +126,8 @@ Photos of places in La Merollissima dropped into `src/assets/gallery/` (PNG, JPG
 form a pool. The home page shows them as a collage behind its content, with a new random
 selection on every page load. Add at least 7 photos; file names do not matter and no alt text is
 needed, because the collage is decorative. With an empty pool the home page has no collage and no
-JavaScript.
+JavaScript. Keep the files small (about 1600 px wide, WebP) and the originals outside
+the repo.
 
 ## Design system
 

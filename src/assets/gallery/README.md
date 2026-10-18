@@ -4,3 +4,7 @@ Every image in this folder (PNG, JPG, WebP or AVIF) can appear in the photo coll
 home page. On each page load a random selection is shown, so add at least 7 photos of places in
 La Merollissima. File names do not matter, and the images are resized and converted at build
 time. The photos are decorative, so they need no alt text.
+
+Keep the files small, for example 1600 px wide WebP: the collage never shows them wider than
+960 px, and every image stays in the git history forever. Keep the original screenshots outside
+the repo.
