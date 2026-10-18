@@ -3,18 +3,19 @@ import Container from "./Container.astro";
 import { DISCLAIMER, OWNER, REPO_URL } from "../config/site";
 ---
 
-<footer class="mt-24 border-t border-line bg-canvas">
-  <Container class="flex flex-col gap-4 py-10 text-sm text-muted">
-    <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-      <p>
+<footer class="mt-16 border-t border-line bg-canvas">
+  <Container class="flex flex-col gap-1 py-4 text-xs text-muted sm:flex-row sm:items-center sm:justify-between sm:gap-6">
+    <p>{DISCLAIMER}</p>
+    <p class="flex shrink-0 items-center gap-4">
+      <span>
         Discord: <span class="font-medium text-ink">{OWNER.discord}</span>
-      </p>
-      <p>
-        <a href={REPO_URL} class="text-accent-soft underline hover:decoration-2">
-          Source code on GitHub
-        </a>
-      </p>
-    </div>
-    <p class="text-xs">{DISCLAIMER}</p>
+      </span>
+      <a
+        href={REPO_URL}
+        class="inline-flex min-h-6 items-center text-accent-soft underline hover:decoration-2"
+      >
+        Source on GitHub
+      </a>
+    </p>
   </Container>
 </footer>
