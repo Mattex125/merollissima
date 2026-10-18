@@ -32,18 +32,24 @@ for (const { chapter, headings } of chapters) {
   <Container>
     <PageHeader title={label} lead={description} />
     {chapters.length > 0 ? (
-      <div class="grid gap-10 lg:grid-cols-[14rem_minmax(0,1fr)] lg:gap-16">
-        <nav aria-labelledby="chapters-title" class="lg:sticky lg:top-24 lg:self-start">
-          <p id="chapters-title" class="text-sm font-semibold tracking-wide text-muted uppercase">
+      <div class="grid gap-10 md:grid-cols-[12rem_minmax(0,1fr)] md:gap-12 lg:grid-cols-[14rem_minmax(0,1fr)] lg:gap-16">
+        <nav aria-labelledby="chapters-title" class="-mx-3 md:sticky md:top-20 md:self-start">
+          <p
+            id="chapters-title"
+            class="px-3 text-sm font-semibold tracking-wide text-muted uppercase"
+          >
             Chapters
           </p>
-          <ol class="mt-3 list-decimal space-y-1 pl-5 marker:text-muted">
-            {chapters.map(({ chapter }) => (
+          <ol class="mt-3 space-y-1">
+            {chapters.map(({ chapter }, index) => (
               <li>
                 <a
                   href={`#${chapter.id}`}
-                  class="inline-block py-1 text-ink underline decoration-line-strong underline-offset-4 hover:decoration-accent-soft"
+                  class="group flex gap-2 rounded-control px-3 py-1.5 text-ink hover:bg-amethyst-500/15 hover:text-accent-soft focus-visible:bg-amethyst-500/15 focus-visible:text-accent-soft motion-safe:transition-colors"
                 >
+                  <span class="text-muted tabular-nums group-hover:text-accent-soft group-focus-visible:text-accent-soft">
+                    {index + 1}.
+                  </span>
                   {chapter.data.title}
                 </a>
               </li>
