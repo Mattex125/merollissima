@@ -2,14 +2,17 @@
 import { render } from "astro:content";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import AuroraBackground from "../../components/AuroraBackground.astro";
+import PostcardsBackground from "../../components/PostcardsBackground.astro";
 import ChapterPhoto from "../../components/ChapterPhoto.astro";
 import Container from "../../components/Container.astro";
 import LorePlaceholder from "../../components/LorePlaceholder.astro";
 import PageHeader from "../../components/PageHeader.astro";
 import { SECTIONS } from "../../config/site";
+import { getGalleryPhotos } from "../../lib/gallery";
 import { getChapters } from "../../lib/history";
 
 const { label, description } = SECTIONS.history;
+const galleryPhotos = await getGalleryPhotos();
 
 // The whole history is one page: every chapter is rendered here, in order.
 const chapters = await Promise.all(
@@ -31,6 +34,7 @@ for (const { chapter, headings } of chapters) {
 
 <BaseLayout title={label} description={description}>
   <AuroraBackground />
+  {galleryPhotos.length > 0 && <PostcardsBackground photos={galleryPhotos} height="short" />}
   <Container>
     <PageHeader title={label} lead={description} />
     {chapters.length > 0 ? (

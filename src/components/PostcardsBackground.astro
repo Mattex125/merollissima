@@ -1,0 +1,70 @@
+---
+import type { GalleryPhoto } from "../lib/gallery";
+
+/**
+ * Photos from the gallery pool scattered like postcards behind the top right of a page,
+ * fading into the page background. A new random selection on every page load.
+ * Render it only when the pool has photos.
+ */
+interface Props {
+  photos: GalleryPhoto[];
+  /** "tall" behind a list (Gazette), "short" above long text (History). */
+  height?: "tall" | "short";
+}
+
+const { photos, height = "tall" } = Astro.props;
+
+// Complete class strings, so Tailwind can find them. Every card keeps its left edge
+// right of the page lead (about 58% of the width), and the 5th card only shows from xl.
+const cards = [
+  "top-20 right-[24%] w-56 -rotate-6",
+  "top-10 right-[7%] w-60 rotate-5",
+  "top-52 right-[1%] w-52 -rotate-3",
+  "top-60 right-[15%] w-56 rotate-8",
+  "top-72 right-[31%] hidden w-44 -rotate-10 xl:block",
+];
+const heights = { tall: "h-[34rem]", short: "h-80" };
+---
+
+<div
+  aria-hidden="true"
+  class:list={[
+    "pointer-events-none absolute inset-x-0 top-16 -z-10 hidden overflow-hidden mask-b-from-50% mask-b-to-100% md:block",
+    heights[height],
+  ]}
+>
+  <div
+    data-postcards
+    class="absolute inset-0 opacity-0 motion-safe:transition-opacity motion-safe:duration-1000"
+  >
+    {cards.map((position) => (
+      <div
+        data-postcard
+        class:list={[
+          "absolute aspect-[4/3] overflow-hidden rounded-card border border-line-strong bg-surface shadow-card",
+          position,
+        ]}
+      />
+    ))}
+  </div>
+  {/*
+      Darkens only where the postcards are, so the page background (the aurora) shows through
+      on the left. 85% canvas where a card meets the title or lead keeps them readable; the
+      band itself fades out at the bottom (mask), with no visible edge.
+    */}
+  <div class="absolute inset-0 bg-linear-to-r from-transparent from-45% via-canvas/85 via-55% to-canvas/50"></div>
+  <script type="application/json" data-postcards-pool set:html={JSON.stringify(photos)} />
+</div>
+
+<script>
+  import { fillWithRandomPhotos, readPool } from "../scripts/random-photos";
+
+  const postcards = document.querySelector<HTMLElement>("[data-postcards]");
+  if (postcards) {
+    fillWithRandomPhotos(postcards, readPool("[data-postcards-pool]"), {
+      tileSelector: "[data-postcard]",
+      imageClass: "size-full object-cover brightness-75",
+      sizes: "15rem",
+    });
+  }
+</script>
