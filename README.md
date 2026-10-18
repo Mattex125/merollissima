@@ -61,7 +61,7 @@ src/
   styles/       global.css: Tailwind and every design token
   content.config.ts   Collection schemas
   assets/       Images processed at build time (the home gallery pool)
-public/         Static files served as-is (favicon)
+public/         Static files served as-is (favicon, header logo)
 scripts/        Repository guards used by the pre-commit hook and CI
 ```
 
