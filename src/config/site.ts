@@ -23,11 +23,11 @@ export interface NavItem {
 }
 
 export interface Section extends NavItem {
-  /** One line, used as the page lead and on the home page cards. */
+  /** One line, used as the page lead and the meta description. */
   description: string;
 }
 
-/** The site's sections, used by the navigation, the home page and the section pages. */
+/** The site's sections, used by the navigation and the section pages. */
 export const SECTIONS = {
   gazette: {
     href: "/gazette/",

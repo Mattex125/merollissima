@@ -5,12 +5,10 @@ import Container from "../components/Container.astro";
 import GazetteEntryCard from "../components/GazetteEntryCard.astro";
 import HomeCollage from "../components/HomeCollage.astro";
 import LorePlaceholder from "../components/LorePlaceholder.astro";
-import SectionCard from "../components/SectionCard.astro";
 import { SECTIONS, SITE } from "../config/site";
 import { getGalleryPhotos } from "../lib/gallery";
 import { getLatestGazette } from "../lib/gazette";
 
-const sections = Object.values(SECTIONS);
 const latest = await getLatestGazette(3);
 const galleryPhotos = await getGalleryPhotos();
 ---
@@ -63,19 +61,4 @@ const galleryPhotos = await getGalleryPhotos();
       </section>
     </Container>
   )}
-
-  <Container>
-    <h2 class="text-2xl font-bold">Explore</h2>
-    <ul class="mt-6 grid gap-4 sm:grid-cols-3">
-      {sections.map((section) => (
-        <li>
-          <SectionCard
-            href={section.href}
-            title={section.label}
-            description={section.description}
-          />
-        </li>
-      ))}
-    </ul>
-  </Container>
 </BaseLayout>
