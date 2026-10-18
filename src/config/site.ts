@@ -2,7 +2,12 @@
 export const SITE = {
   name: "La Merollissima",
   description:
-    "Gazette, history and builds of La Merollissima, a Minecraft republic inspired by Venice.",
+    "La Merollissima, a ducal republic built in Minecraft: its Gazette, its history and its builds.",
+  /** Form of government, shown above the name on the home page. */
+  government: "Ducal Republic",
+  /** Home page introduction, drawn from the History and the builds. */
+  intro:
+    "From a valley of snow to the beacon of the server: a republic of amethyst, ruled by its Doge.",
   lang: "en",
   ogLocale: "en_US",
 } as const;

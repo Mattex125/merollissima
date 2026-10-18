@@ -4,7 +4,6 @@ import ButtonLink from "../components/ButtonLink.astro";
 import Container from "../components/Container.astro";
 import GazetteEntryCard from "../components/GazetteEntryCard.astro";
 import HomeCollage from "../components/HomeCollage.astro";
-import LorePlaceholder from "../components/LorePlaceholder.astro";
 import { SECTIONS, SITE } from "../config/site";
 import { getGalleryPhotos } from "../lib/gallery";
 import { getLatestGazette } from "../lib/gazette";
@@ -19,14 +18,12 @@ const galleryPhotos = await getGalleryPhotos();
     <div aria-hidden="true" class="absolute inset-0 -z-10 bg-(image:--gradient-hero-glow)"></div>
     <Container class="py-24 sm:py-32">
       <p class="text-sm font-semibold tracking-widest text-accent-soft uppercase">
-        A Minecraft republic inspired by Venice
+        {SITE.government}
       </p>
       <h1 id="hero-title" class="mt-4 text-display gradient-text">
         {SITE.name}
       </h1>
-      <div class="mt-8 max-w-xl">
-        <LorePlaceholder what="Motto and a short introduction to the republic." />
-      </div>
+      <p class="mt-6 max-w-2xl text-xl text-ink/90 sm:text-2xl">{SITE.intro}</p>
       <div class="mt-10 flex flex-wrap gap-3">
         <ButtonLink href={SECTIONS.gazette.href}>Read the Gazette</ButtonLink>
         <ButtonLink href={SECTIONS.builds.href} variant="secondary">
