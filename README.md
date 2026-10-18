@@ -60,6 +60,7 @@ src/
   pages/        File-based routes: /, /gazette/, /gazette/<slug>/, /history/, /builds/, 404
   styles/       global.css: Tailwind and every design token
   content.config.ts   Collection schemas
+  assets/       Images processed at build time (the home gallery pool)
 public/         Static files served as-is (favicon)
 scripts/        Repository guards used by the pre-commit hook and CI
 ```
@@ -118,6 +119,14 @@ Chapter text. Subsections, if any, start at `###`.
 - Until a chapter has a photo, a visible "TODO: photo" placeholder marks its place.
 - The build fails if two chapters share an `order` or if two anchors on the page collide.
 - The chapters come from the owner's lore document, which is the single source of truth.
+
+### Home gallery
+
+Photos of places in La Merollissima dropped into `src/assets/gallery/` (PNG, JPG, WebP or AVIF)
+form a pool. The home page shows them as a collage behind its content, with a new random
+selection on every page load. Add at least 7 photos; file names do not matter and no alt text is
+needed, because the collage is decorative. With an empty pool the home page has no collage and no
+JavaScript.
 
 ## Design system
 
