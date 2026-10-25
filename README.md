@@ -17,6 +17,7 @@ extend.
 - [Tailwind CSS 4](https://tailwindcss.com) with CSS-first design tokens
 - Self-hosted fonts (Bricolage Grotesque, Geist) through the Astro Fonts API
 - Content collections with typed schemas, validated at build time
+- [Sveltia CMS](https://github.com/sveltia/sveltia-cms) for editing content in the browser
 - Leaflet for the builds map and `<model-viewer>` for the 3D hero (planned)
 - Hosted on [Vercel](https://vercel.com); CI on GitHub Actions
 
@@ -61,11 +62,34 @@ src/
   styles/       global.css: Tailwind and every design token
   content.config.ts   Collection schemas
   assets/       Images processed at build time (the home gallery pool)
-public/         Static files served as-is (favicon, header logo)
+public/         Static files served as-is (favicon, header logo, admin/ content editor)
 scripts/        Repository guards used by the pre-commit hook and CI
 ```
 
 ## Writing content
+
+### Editing in the browser
+
+Content can be edited without touching files at `/admin/`, through
+[Sveltia CMS](https://github.com/sveltia/sveltia-cms): a static page that reads and writes this
+repository with the GitHub API. There is no server, and the site stays fully static.
+
+- **Sign in** with a fine-grained GitHub personal access token limited to this repository, with
+  _Contents_ and _Pull requests_ set to read and write. The token is kept in the browser.
+- **Gazette and History** use an editorial workflow. Every change is saved as a draft on a
+  `cms/…` branch with a pull request, which gets a Vercel preview. _Publish_ squash-merges it into
+  `main`, which deploys to production. A draft that breaks the content schemas fails only its
+  preview.
+- **Home gallery:** photos added to or deleted from the asset library are committed directly to
+  `main`, without a draft.
+- Uploaded images are converted to WebP in the browser, at most 1600 px on the longest side.
+- Slugs (entry URLs and chapter anchors) are set when an entry is created and never renamed.
+- The editor is configured in [`public/admin/config.yml`](public/admin/config.yml). Its fields
+  mirror the schemas in [`src/content.config.ts`](src/content.config.ts): keep the two in sync.
+- The home page texts and everything else stay in code.
+- Locally, `npm run dev` serves the editor at `http://localhost:4321/admin/index.html`.
+
+The sections below describe the files the editor writes, for editing them by hand.
 
 ### Gazette entries
 
@@ -96,8 +120,8 @@ Body text in Markdown. Headings start at `##`. Up to about two inline images:
   sources about 1344px wide are enough, even for high-density screens.
 - Commit new entries with the `content:` type.
 
-The market entry uses placeholder images: replace them with real screenshots, keeping the file
-names, and update the alt texts.
+The market entry uses placeholder images: replace them with real screenshots (in the editor or by
+hand) and update the alt texts.
 
 ### History chapters
 
