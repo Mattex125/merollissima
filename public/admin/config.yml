@@ -1,0 +1,141 @@
+# yaml-language-server: $schema=https://unpkg.com/@sveltia/cms@0.252.0/schema/sveltia-cms.json
+#
+# Sveltia CMS configuration: the browser editor at /admin/.
+# The fields mirror the content schemas in src/content.config.ts; keep them in sync.
+
+app_title: La Merollissima
+logo_url: /logo.svg
+site_url: https://merollissima.vercel.app
+
+backend:
+  name: github
+  repo: Mattex125/merollissima
+  branch: main
+  # Sign in with a fine-grained personal access token: no OAuth server needed.
+  auth_methods: [token]
+  # Publishing a draft squashes its pull request into a single commit on main.
+  squash_merges: true
+  commit_messages:
+    create: "content: create {{collection}} {{slug}}"
+    update: "content: update {{collection}} {{slug}}"
+    delete: "content: delete {{collection}} {{slug}}"
+    uploadMedia: "content: upload {{path}}"
+    deleteMedia: "content: delete {{path}}"
+
+# Drafts: every change goes to a cms/... branch with a pull request and a Vercel
+# preview; "Publish" merges it into main, which deploys to production.
+publish_mode: editorial_workflow
+
+# The home gallery pool. Photos uploaded or deleted in the asset library are
+# committed straight to main (no draft); see README.md.
+media_folder: src/assets/gallery
+public_folder: src/assets/gallery
+
+media_libraries:
+  default:
+    config:
+      slugify_filename: true
+      max_file_size: 26214400 # 25 MB, before conversion
+      transformations:
+        raster_image:
+          format: webp
+          quality: 82
+          width: 1600
+          height: 1600
+
+output:
+  # An empty optional field (for example an alt text) would fail the content schemas.
+  omit_empty_optional_fields: true
+
+slug:
+  encoding: ascii
+  clean_accents: true
+  sanitize_replacement: "-"
+
+collections:
+  - name: gazette
+    label: Gazette
+    label_singular: gazette entry
+    description: Official announcements, numbered automatically by date (No. 0 is the oldest).
+    icon: newspaper
+    folder: src/content/gazette
+    path: "{{slug}}/index"
+    # Images live in the entry's own folder, next to index.md.
+    media_folder: ""
+    public_folder: ""
+    preview_path: /gazette/{{slug}}/
+    summary: "{{title}} ({{date | date('YYYY-MM-DD')}})"
+    sortable_fields:
+      fields: [date, title]
+      default: { field: date, direction: descending }
+    slug:
+      template: "{{title}}"
+      # The slug is the URL: it can be set when creating an entry, never renamed.
+      editable: [create]
+      pattern: ["^[a-z0-9]+(-[a-z0-9]+)*$", "Lowercase letters, digits and hyphens only"]
+    fields:
+      - { name: title, label: Title }
+      - { name: date, label: Date, widget: datetime, type: date, default: "{{now}}" }
+      - name: summary
+        label: Summary
+        hint: One line, shown in lists and on the home page.
+      - name: cover
+        label: Cover image
+        widget: image
+        required: false
+        hint: Optional. Upload it here (not from the gallery). It is converted to WebP.
+      - name: coverAlt
+        label: Cover alt text
+        required: false
+        hint: Required when there is a cover. Describe the image for people who cannot see it.
+      - name: pinned
+        label: Pinned
+        widget: boolean
+        default: false
+        required: false
+        hint: Pinned entries come first on the home page.
+      - name: body
+        label: Text
+        widget: markdown
+        hint: Headings start at level 2. Up to about two images; every image needs an alt text.
+
+  - name: history
+    label: History
+    label_singular: history chapter
+    description: The chapters of the History page, shown in order on a single page.
+    icon: menu_book
+    folder: src/content/history
+    # Chapter photos are stored in the same folder as the chapters.
+    media_folder: ""
+    public_folder: ""
+    preview_path: /history/#{{slug}}
+    summary: "{{order}}. {{title}}"
+    sortable_fields:
+      fields: [order, title]
+      default: { field: order, direction: ascending }
+    slug:
+      template: "{{title}}"
+      # The slug is the chapter's anchor (/history/#slug): never renamed.
+      editable: [create]
+      pattern: ["^[a-z0-9]+(-[a-z0-9]+)*$", "Lowercase letters, digits and hyphens only"]
+    fields:
+      - { name: title, label: Title }
+      - name: order
+        label: Order
+        widget: number
+        value_type: int
+        min: 1
+        hint: Position on the page. Every chapter needs a different number.
+      - name: photo
+        label: Photo
+        widget: image
+        required: false
+        hint: Optional photo shown at the end of the chapter.
+      - name: photoAlt
+        label: Photo alt text
+        required: false
+        hint: Required when there is a photo.
+      - name: photoCaption
+        label: Photo caption
+        required: false
+      - { name: body, label: Text, widget: markdown }
