@@ -17,6 +17,8 @@ npm-debug.log*
 
 # local tool / agent overrides
 mise.local.toml
+# local secrets, e.g. the content editor's GitHub token (pushadmin.token)
+*.token
 .claude/settings.local.json
 CLAUDE.local.md
 
