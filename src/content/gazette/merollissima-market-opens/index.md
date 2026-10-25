@@ -1,6 +1,4 @@
 ---
-# The images are placeholders: replace cover.png, screenshot-1.png and screenshot-2.png
-# with real screenshots (same file names) and describe them in coverAlt and the alt texts.
 title: The Merollissima market opens
 date: 2026-10-18
 summary: The market of La Merollissima opens its stalls to traders from across the server.
