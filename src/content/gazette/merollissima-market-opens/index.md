@@ -16,4 +16,4 @@ The market of La Merollissima is open. Traders from across the server are welcom
 Every citizen and every visitor may buy and sell at the market. The Republic keeps it open to all,
 as it has done since its first years.
 
-![Placeholder for a second screenshot of the market.](foto3.webp)
+![Placeholder for a second screenshot of the market.](foto2.webp)
